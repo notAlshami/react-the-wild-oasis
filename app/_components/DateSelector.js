@@ -5,7 +5,6 @@ import {
   isSameDay,
   isWithinInterval,
 } from "date-fns";
-import { useState } from "react";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import { useReservation } from "./ReservationsContext";
@@ -21,8 +20,9 @@ function isAlreadyBooked(range, datesArr) {
 }
 
 function DateSelector({ settings, cabin, bookedDates }) {
-  const { range, setRange, resetRange } = useReservation();
+  const { range, rangeSetter: setRange, resetRange } = useReservation();
   const displayRange = isAlreadyBooked(range, bookedDates) ? {} : range;
+
   const { regularPrice, discount } = cabin;
   const numNights = differenceInDays(displayRange.to, displayRange.from);
   const cabinPrice = numNights * (regularPrice - discount);
